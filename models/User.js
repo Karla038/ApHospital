@@ -15,8 +15,17 @@ const UserSchema = Schema({
     password: {
         type: String,
         require: true
+    },
+    role: {
+        type :String,
+        require: true
+    },
+    Especialidad:{
+        type: Schema.Types.ObjectId,
+        ref: 'Especialidad',
+        require: false
     }
-
+    
 })
 
 module.exports = model('User', UserSchema);
