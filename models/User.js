@@ -20,7 +20,7 @@ const UserSchema = Schema({
         type :String,
         require: true
     },
-    Especialidad:{
+    especialidad:{
         type: Schema.Types.ObjectId,
         ref: 'Especialidad',
         require: false

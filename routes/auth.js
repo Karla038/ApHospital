@@ -7,10 +7,11 @@ const {Router} = require('express');
 // Es el middelware que valida un campo en particular 
 const { check } = require('express-validator');
 const {validarCampos} = require('../middlewares/validar-campos');
-const router = Router();
 const { crearUsuario, loginUsuario, revalidarToken} = require('../controllers/auth');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
+
+const router = Router();
 // ruta de registro
 router.post('/new', 
     [ //Middelwares

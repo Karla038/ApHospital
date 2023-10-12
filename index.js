@@ -1,19 +1,19 @@
 const express = require('express');
-require('dotenv').config();
 const cors = require('cors')
 const { dbConnection } = require('./database/config');
 
 // console.log( process.env );
 
-//Crear el servidor de express
+require('dotenv').config();
 
+//Crear el servidor de express
 const app = express();
 
 //Base de datos 
 dbConnection();
 
 //Cors
-app.use(cors());
+app.use(cors('*'));
 
 
 //Directorio public
@@ -29,6 +29,7 @@ app.use(express.json( ));  //Midelware
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/Paciente', require('./routes/Paciente'));
 app.use('/api/Cita', require('./routes/Cita'));
+app.use('/api/especialidad',require('./routes/especialidad-routes'));
 
 
 

@@ -1,7 +1,11 @@
 const {Schema, model} = require('mongoose');
 
 const CitaSchema = Schema({
-    
+    // Referencias a los usuarios
+    doctor: {
+        type: Schema.Types.ObjectId,
+        ref:'Users'
+    },    
     // Referencia de paciente
     paciente: {
         type: Schema.Types.ObjectId, 
