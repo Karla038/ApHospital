@@ -17,6 +17,11 @@ const PacienteSchema = Schema({
         type: Number,
         required:true,
 
+    },
+    curp: {
+        type: String,
+        required: true,
+        unique: true
     }
 })
 

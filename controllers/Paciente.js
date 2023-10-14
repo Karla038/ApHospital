@@ -3,12 +3,17 @@ const paciente = require('../models/Paciente');
 
 const crearPaciente = async(req, res= response) => {
 
-    // return res.json({
-    //     ok:true,
-    //     msg:'Funciona'
-    // })
 
-    // const { name, fatherLastname, motherLastname, telephone } = req.body;
+    const { curp } = req.body;
+
+    nuevaEspecialidad = await paciente.findOne({ curp });
+
+        if( nuevaEspecialidad ){
+            return res.status(400).json({
+                ok:false,
+                msg: 'El paciente ya existe'
+            })
+        }
 
     let nuevoPaciente; 
     let pacienteGuardado;
@@ -24,6 +29,31 @@ const crearPaciente = async(req, res= response) => {
 }
 
 
+const obtenerPacientes = async(req,res = response ) =>{
+
+    
+    // Obtener todos los pacientes
+    let pacientes = [];
+    try {
+        pacientes = await paciente.find();
+        console.log(pacientes)
+    } catch (error) {
+        return res.status(500).json({
+            ok:false,
+            msg:'No se pudo obtener pacientes'
+            
+        })
+    }   
+
+    return res.status(200).json({
+        ok:true,
+        msg:'Los pacientes se consultaron correctamente',
+        data:pacientes
+    })    
+}
+
+
 module.exports = {
-    crearPaciente
+    crearPaciente,
+    obtenerPacientes
 }
