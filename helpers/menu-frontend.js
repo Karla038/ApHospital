@@ -5,17 +5,13 @@ const TIPOS_USUARIO = {
 
 const getMenuFrontEnd = (role = 'ENFERMERA') =>{
     const menuEnfermera = [
-        {
-          titulo:'Principal',    
-          submenu:[
-            {titulo: 'Inicio', url: '/dashboards/cita'},                       
-          ],
-        //   busqueda:[
-        //     {titulo:'Mapa del Sitio',url: '/inicio/mapa-sitio'},
-        //     {titulo: 'Inicio', url: '/inicio'},
-        //     // {titulo:'Mapa del Sitio',url: '/dashboard/mapa-sitio'},
-        //   ]
-        },
+      {
+        id   : 'cita',
+        title: 'Cita',
+        type : 'basic',
+        icon:'heroicons_outline:clipboard-document-list',
+        link : '/dashboards/cita'
+      }      
         // {
         //   titulo:'Mantenimientos',
         // //   icono: 'mdi mdi-folfer-lock-open',
@@ -28,18 +24,26 @@ const getMenuFrontEnd = (role = 'ENFERMERA') =>{
         // }
       ];
 
-      const menuDoctor = [
+      const menuDoctor = [   
         {
-            titulo:'Principal',    
-            submenu:[
-              {titulo: 'Inicio', url: '/dashboards/cita'},                       
-            ],
-          //   busqueda:[
-          //     {titulo:'Mapa del Sitio',url: '/inicio/mapa-sitio'},
-          //     {titulo: 'Inicio', url: '/inicio'},
-          //     // {titulo:'Mapa del Sitio',url: '/dashboard/mapa-sitio'},
-          //   ]
-          }
+          id   : 'Cita.Agendada',
+          title: 'Cita',
+          type : 'basic',
+          icon:'heroicons_outline:clipboard-document-list',
+          link : '/dashboards/cita_agendada'
+        } 
+
+        // {
+        //     titulo:'Principal',    
+        //     submenu:[
+        //       {titulo: 'Inicio', url: '/dashboards/cita'},                       
+        //     ],
+        //   //   busqueda:[
+        //   //     {titulo:'Mapa del Sitio',url: '/inicio/mapa-sitio'},
+        //   //     {titulo: 'Inicio', url: '/inicio'},
+        //   //     // {titulo:'Mapa del Sitio',url: '/dashboard/mapa-sitio'},
+        //   //   ]
+        //   }
       ]
 
       if(role === TIPOS_USUARIO.ENFERMERA){
