@@ -19,7 +19,7 @@ const UserSchema = Schema({
     role: {
         type :String,
         require: true
-    },
+    },      
     especialidad:{
         type: Schema.Types.ObjectId,
         ref: 'Especialidad',

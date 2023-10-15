@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const { generarJWT } = require('../helpers/jwt');
 const Especialidad = require('../models/Especialidad');
+const { getMenuFrontEnd } = require('../helpers/menu-frontend');
 
 
 // Evitar los magic string,
@@ -13,6 +14,7 @@ const TIPOS_USUARIO = {
     DOCTOR:'DOCTOR',
     ENFERMERA:'ENFERMERA'
 }
+
 
 
 const crearUsuario = async(req, res = response) => {
@@ -46,13 +48,10 @@ const crearUsuario = async(req, res = response) => {
                 })
             }   
         }     
-        console.log(req.body)
-        console.log('Contrui');
    
 
         usuario = new User(req.body);
 
-        console.log(usuario);
         // Encriptar contraseña
         const salt = bcrypt.genSaltSync();
         usuario.password = await bcrypt.hashSync( password, salt);
@@ -69,7 +68,8 @@ const crearUsuario = async(req, res = response) => {
         return res.status(201).json({
             ok:true,
             msg:'El usuario se creo con exito',
-            data:token
+            data:token,
+            menu:getMenuFrontEnd(role)
         })
     }catch (error) {
         return res.status(500).json({
@@ -110,19 +110,55 @@ const loginUsuario = async(req, res = response) => {
         const token = await generarJWT( usuario.id, usuario.name);
 
 
-        res.status(201).json({
+        return res.status(201).json({
             ok:true,
-            uid: usuario.id,
-            name: usuario.name,
-            token
+            msg:'Se inicio sesion correctamente',
+            data:token,
+            menu:getMenuFrontEnd(usuario.role)
         })                                                                                                   
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             ok: false,
             msg: 'Correo electronico o cantraseña incorrectos'
         })
     }
+
+}
+
+const obtenerUsuarioId = async (req,res =response) =>{
+    const id = req.params.id;
+
+    if(id === null){
+        return res.status(400).json({
+            ok:false,
+            msg:'Ubo un error inesperado',
+            data:null
+        });
+    }
+
+    try {
+        let usuario = await User.findById(id);
+    
+        if(!usuario){
+            return res.status(404).json({
+                ok:false,
+                msg:'El usuario no existe',
+                data:null
+            });
+        }
+        return res.status(200).json({
+            ok:false,
+            msg:'El usuario existe correctamente',
+            data:usuario
+        });
+    } catch (error) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'Hubo un error inesperado'
+        })
+    }
+
 
 }
 
@@ -138,6 +174,7 @@ const revalidarToken = async (req, res = response) => {
 
 
 module.exports = {
+    obtenerUsuarioId,
     crearUsuario,
     loginUsuario, 
     revalidarToken
