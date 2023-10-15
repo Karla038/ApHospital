@@ -43,7 +43,8 @@ const obtenerPacientes = async(req,res = response ) =>{
             msg:'No se pudo obtener pacientes'
             
         })
-    }   
+    }  
+    
 
     return res.status(200).json({
         ok:true,
@@ -52,8 +53,24 @@ const obtenerPacientes = async(req,res = response ) =>{
     })    
 }
 
+const busquedaCurp = async (req, res) => {
+    const parame = req.params.curp;
+
+    const expReg = new RegExp(parame, 'i');
+
+    const pacientes = await paciente.find({curp:expReg});
+
+
+    return res.status(200).json({
+        ok:true,
+        msg:'La curp se consulto',
+        data:pacientes
+    })
+
+}
 
 module.exports = {
     crearPaciente,
-    obtenerPacientes
+    obtenerPacientes,
+    busquedaCurp
 }
