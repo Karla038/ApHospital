@@ -3,6 +3,7 @@ const router = Router();
 const { check } = require('express-validator')
 const { crearPaciente } = require('../controllers/Paciente');
 const { obtenerPacientes } = require('../controllers/Paciente');
+const { busquedaCurp } = require('../controllers/Paciente')
 const { validarCampos } = require('../middlewares/validar-campos');
 
 //ruta de crear paciente
@@ -18,5 +19,7 @@ router.post('/crearPaciente',
 ],crearPaciente);
 
 router.get('/obtenerTodosPacientes',obtenerPacientes)
+
+router.get('/buscaPorCurp/:curp', busquedaCurp)
 
 module.exports = router;

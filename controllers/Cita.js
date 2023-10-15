@@ -1,13 +1,13 @@
 const {response} = require('express');
 const paciente = require('../models/Paciente');
-const crearPaciente = require('../controllers/Paciente');
+// const crearPaciente = require('../controllers/Paciente');
 const Cita = require('../models/Cita');
 
 
 
 const agendarCita = async(req, res=response) => {
 
-    const { age, weight, height, temperature, pressureArterial, heartrate, date, hour, note,paciente} = req.body;
+    const { paciente } = req.body;
 
 
     let nuevaCita;
@@ -15,9 +15,9 @@ const agendarCita = async(req, res=response) => {
     try {
      console.log("Agendar Cita")   
     
-    const fechaHoy = new Date();
+    // const fechaHoy = new Date();
     
-    nuevaCita = await Cita.find({paciente:paciente});
+    nuevaCita = await Cita.find({ paciente });
     //const fechaCita = new Date(nuevaCita.date);
     //fecha.getDay === 
 
@@ -50,7 +50,7 @@ const agendarCita = async(req, res=response) => {
     // Responder con la cita creada
     return res.status(201).json({
         ok: true,        
-        nuevaCita
+        data: nuevaCita
     });
 };
 
