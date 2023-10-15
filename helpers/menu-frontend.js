@@ -3,7 +3,7 @@ const TIPOS_USUARIO = {
     ENFERMERA:'ENFERMERA'
 }
 
-const getMenuFrontEnd = (role = 'ENFERMERA') =>{
+const getMenuFrontEnd = (role) =>{
     const menuEnfermera = [
       {
         id   : 'cita',
@@ -27,7 +27,7 @@ const getMenuFrontEnd = (role = 'ENFERMERA') =>{
       const menuDoctor = [   
         {
           id   : 'Cita.Agendada',
-          title: 'Cita',
+          title: 'Cita Agendada',
           type : 'basic',
           icon:'heroicons_outline:clipboard-document-list',
           link : '/dashboards/cita_agendada'
@@ -50,6 +50,7 @@ const getMenuFrontEnd = (role = 'ENFERMERA') =>{
         return menuEnfermera;
       }
       if(role === TIPOS_USUARIO.DOCTOR){
+        console.log('Doc');
         return menuDoctor;
       }
 }
