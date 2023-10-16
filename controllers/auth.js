@@ -162,6 +162,44 @@ const obtenerUsuarioId = async (req,res =response) =>{
 
 }
 
+
+const busquedaDoctor = async (req, res = response) => {
+    
+    const doctor = req.params.role;
+
+        if( !doctor ){
+            return res.status(400).json({
+                ok:false,
+                msg:'El usuario consultado no es doctor'
+            })
+        }
+
+        // if(role === TIPOS_USUARIO.DOCTOR){
+        //     return res.status(201).json({
+        //         ok:true,
+        //         msg:"Es doctor",  
+        //     })
+        // }
+    
+    try {
+        
+        let doctores = await User.find({ role:doctor });
+
+
+        return res.status(200).json({
+            ok:true,
+            msg:'Los usuarios son doctores',
+            data:doctores
+        });
+        
+    } catch (error) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'Los usuarios no son doctores'
+        })
+    }
+}
+
 const revalidarToken = async (req, res = response) => {
     
     const token = await generarJWT( req.uid, req.name);
@@ -175,6 +213,7 @@ const revalidarToken = async (req, res = response) => {
 
 module.exports = {
     obtenerUsuarioId,
+    busquedaDoctor,
     crearUsuario,
     loginUsuario, 
     revalidarToken
