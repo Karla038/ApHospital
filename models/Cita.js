@@ -1,15 +1,19 @@
 const {Schema, model} = require('mongoose');
+const mongoose = require('mongoose')
 
-const CitaSchema = Schema({
+const CitaSchema = mongoose.Schema({
     // Referencias a los usuarios
     doctor: {
-        type: Schema.Types.ObjectId,
-        ref:'Users'
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        require: true
     },    
     // Referencia de paciente
     paciente: {
-        type: Schema.Types.ObjectId, 
-        ref: 'Pacientes'},
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Paciente',
+        require: true
+    },
     age:{
         type: Number,
         required: true, 

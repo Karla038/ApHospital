@@ -7,39 +7,60 @@ const Cita = require('../models/Cita');
 
 const agendarCita = async(req, res=response) => {
 
-    const { paciente } = req.body;
-
+    const {hour,paciente,doctor ,date} = req.body;
 
     let nuevaCita;
+
         
     try {
      console.log("Agendar Cita")   
     
     // const fechaHoy = new Date();
     
-    nuevaCita = await Cita.find({ paciente });
+    nuevaCita = await Cita.find({ 
+        $and:[
+            {hour:hour},
+            {paciente:paciente}
+        ]
+    });
     //const fechaCita = new Date(nuevaCita.date);
     //fecha.getDay === 
+   
 
 
     console.log(nuevaCita);
 
-    if (nuevaCita) {
+    if (nuevaCita.length >= 1) {
         return res.status(400).json({
             ok: false,
             msg: 'El paciente ya tiene una cita agendada'
         });
     }
 
+    const doctorCita = await Cita.find({ 
+        $and:[
+            {hour:hour},
+            {doctor:doctor}
+        ]
+    });
+
+    if (doctorCita.length >= 1) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'El Doctor ya tiene una cita agendada para esta hora'
+        });
+    }
+
     console.log("pase del if")
 
     // Crear una nueva cita
-    nuevaCita = new Cita(req.body);
+    const cita = new Cita(req.body)
 
-    console.log(nuevaCita)
+    console.log(cita)
+    console.log(req.body)
     // Guardar la cita en la base de datos
-    await nuevaCita.save();
-        
+    await cita.save();
+    
     } catch (error) {
         return res.status(500).json({
             ok: false,
@@ -49,7 +70,8 @@ const agendarCita = async(req, res=response) => {
 
     // Responder con la cita creada
     return res.status(201).json({
-        ok: true,        
+        ok: true,   
+        msg:'La cita se agendo correctemente',     
         data: nuevaCita
     });
 };

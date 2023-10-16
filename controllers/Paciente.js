@@ -15,16 +15,14 @@ const crearPaciente = async(req, res= response) => {
             })
         }
 
-    let nuevoPaciente; 
-    let pacienteGuardado;
+    const nuevoPaciente = new paciente(req.body);
 
-    nuevoPaciente = new paciente(req.body);
-
-    await nuevoPaciente.save(pacienteGuardado);
+    const pacienteGuardado = await nuevoPaciente.save();
 
     return res.status(201).json({
         ok: true,
-        msg: 'Se registraron los datos'
+        msg: 'Se registraron los datos',
+        data:pacienteGuardado
     })
 }
 
