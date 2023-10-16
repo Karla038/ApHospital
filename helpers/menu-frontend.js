@@ -23,7 +23,7 @@ const getMenuFrontEnd = (role) =>{
         //   ]         
         // }
       ];
-
+      
       const menuDoctor = [   
         {
           id   : 'Cita.Agendada',
