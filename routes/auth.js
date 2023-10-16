@@ -7,7 +7,7 @@ const {Router} = require('express');
 // Es el middelware que valida un campo en particular 
 const { check } = require('express-validator');
 const {validarCampos} = require('../middlewares/validar-campos');
-const { obtenerUsuarioId,crearUsuario, loginUsuario, revalidarToken} = require('../controllers/auth');
+const { obtenerUsuarioId, busquedaDoctor, crearUsuario, loginUsuario, revalidarToken} = require('../controllers/auth');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
 
@@ -15,6 +15,9 @@ const router = Router();
 // Ruta para obtener por id
 
 router.get('/buscar_id/:id',obtenerUsuarioId);
+
+// ruta para obtener la especialidad
+router.get('/busqueda_doctor/:role',busquedaDoctor);
 
 // ruta de registro
 router.post('/new', 
