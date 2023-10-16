@@ -39,9 +39,9 @@ const crearUsuario = async(req, res = response) => {
         // exista
         if(role === TIPOS_USUARIO.DOCTOR){
             // Verificando el id realmente exista
-            const especialidad = await Especialidad.findById(especialidad);
+            const especialidadId = await Especialidad.findById(especialidad);
 
-            if(!especialidad){
+            if(!especialidadId){
                 return res.status(404).json({
                    ok:false,
                     msg:'La especialidad no existe'
