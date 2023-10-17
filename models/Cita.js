@@ -38,11 +38,23 @@ const CitaSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    date:{
-        type: Date,
+    year:{
+        type: Number,
         required: true
     },
-    hour: {
+    month:{
+        type: Number,
+        required: true
+    },
+    day:{
+        type: Number,
+        required: true
+    },
+    startHour: {
+        type: Number,
+        required: true
+    },
+    endHour:{
         type: Number,
         required: true
     },
