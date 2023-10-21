@@ -58,6 +58,8 @@ const agendarCita = async(req, res=response) => {
     }
 
     console.log("pase del if")
+    // Definiendo que la cita se agende a false
+    req.body.attended = false;
 
     // Crear una nueva cita
     const cita = new Cita(req.body)
