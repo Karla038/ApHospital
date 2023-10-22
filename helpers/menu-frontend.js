@@ -11,7 +11,15 @@ const getMenuFrontEnd = (role) =>{
         type : 'basic',
         icon:'heroicons_outline:clipboard-document-list',
         link : '/dashboards/cita'
-      }      
+      },
+      {
+        id   : 'cita',
+        title: 'Historial Pacientes',
+        type : 'basic',
+        icon:'heroicons_outline:clipboard-document-list',
+        link : '/dashboards/historial_medico'
+      }           
+      
         // {
         //   titulo:'Mantenimientos',
         // //   icono: 'mdi mdi-folfer-lock-open',

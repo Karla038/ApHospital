@@ -61,6 +61,10 @@ const CitaSchema = mongoose.Schema({
     note:{
         type: String,
         required:false
+    },
+    attended:{
+        type:Boolean,
+        require: true
     }
 })
 
