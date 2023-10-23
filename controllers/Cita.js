@@ -2,7 +2,7 @@ const {response} = require('express');
 const paciente = require('../models/Paciente');
 // const crearPaciente = require('../controllers/Paciente');
 const Cita = require('../models/Cita');
-
+const User = require('../models/User');
 
 
 const agendarCita = async(req, res=response) => {
@@ -89,6 +89,7 @@ const obtenerCitasPorDoctor = async(req,res = response) =>{
 
     const idDoctor = req.params.idMedico;
 
+    console.log(idDoctor)
     try {  
 
         if(!idDoctor){
@@ -104,6 +105,9 @@ const obtenerCitasPorDoctor = async(req,res = response) =>{
         const month = fecha.getMonth();
         const day = fecha.getDate();
 
+
+        console.log(day)
+        
         const citas = await Cita.find({ 
             $and:[
                 {year:year},
