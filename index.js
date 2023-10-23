@@ -31,6 +31,7 @@ app.use('/api/Paciente', require('./routes/Paciente'));
 app.use('/api/Cita', require('./routes/Cita'));
 app.use('/api/especialidad',require('./routes/especialidad-routes'));
 app.use('/api/diagnostico',require('./routes/diagnostico-routes'));
+app.use('/api/medicina',require('./routes/medicina'))
 
 
 //Escuchar peticiones
