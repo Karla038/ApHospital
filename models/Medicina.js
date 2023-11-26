@@ -24,6 +24,10 @@ const MedicinaSchema = mongoose.Schema({
     medicamentoDisponible:{
         type: Boolean,
         default: true
+    },
+    codigoBarras:{
+        type: String,
+        require: false
     }
 })
 

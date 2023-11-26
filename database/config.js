@@ -1,3 +1,4 @@
+/*
 const mongoose= require('mongoose');
 
 const dbConnection = async() => {
@@ -22,8 +23,8 @@ const dbConnection = async() => {
 module.exports = {
     dbConnection
 }
+*/
 
-/*
 const mongoose= require('mongoose');
 
 const DB_Connection = 'mongodb+srv://aphospital:KrFaQIvi9grg19KY@cluster0.rfvwvoj.mongodb.net/aphospital';
@@ -50,4 +51,3 @@ const dbConnection = async() => {
 module.exports = {
     dbConnection
 }
-*/
