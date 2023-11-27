@@ -1,20 +1,45 @@
 const {response} = require('express');
-const paciente = require('../models/Paciente');
+const Paciente = require('../models/Paciente');
 // const crearPaciente = require('../controllers/Paciente');
 const Cita = require('../models/Cita');
+const User = require('../models/User');
 
+const Publisher = require('../observable/Publisher');
+const {notificacionDoctorCita} = require('../helpers/cita-agendada');
+
+
+
+// function notificacionDoctorCitFuncion(datosEmai){
+//     notificacionDoctorCita(datosEmai);
+// }
 
 
 const agendarCita = async(req, res=response) => {
 
+    const publisher = new Publisher();
     const {paciente,doctor ,day,month,year,startHour} = req.body;
 
     let nuevaCita;
 
+    const doctorId = await User.findById(doctor);
+    const pacienteId = await Paciente.findById(paciente);
+
+    const fechaFormateada  = `${year} ${month} ${day} ${startHour}`
+
+    const datosEmail = {
+        nombreDoctor: doctorId.name,
+        emailDoctor: doctorId.email,
+        nombrePaciente: pacienteId.name,
+        fecha:fechaFormateada
+    }
+    // Se suscribe para enviar el correo porque nos llega a interesa
+    publisher.suscribe('email',() =>notificacionDoctorCita(datosEmail));
         
+
     try {
+        
      console.log("Agendar Cita")   
-    
+
     // const fechaHoy = new Date();
     
     nuevaCita = await Cita.find({ 
@@ -67,14 +92,20 @@ const agendarCita = async(req, res=response) => {
     console.log(cita)
     console.log(req.body)
     // Guardar la cita en la base de datos
-    await cita.save();
     
+    await cita.save();
+
+
+
     } catch (error) {
         return res.status(500).json({
             ok: false,
             msg: 'No se puede agendar la cita'
         })
-    }
+    }   
+    // Si no hay un error, llamamos a nuestro metodo
+    publisher.notify('email');
+
 
     // Responder con la cita creada
     return res.status(201).json({
