@@ -18,8 +18,8 @@ const notificacionDoctorCita = async (datos)  =>{
         subject: 'Una persona agendo una cita',
         // text: ` `,
         html: `
-        <p>Hola Doctor ${nombreDoctor} una persona agendo una cita a las ${fecha} hora MX</p>
-        <p> La persona con el nombre ${nombrePaciente} </p>`           
+        <p>Hola Doctor(a) ${nombreDoctor} tiene una cita agendada el dia ${fecha} horas MX</p>
+        <p> El paciente con el nombre ${nombrePaciente} </p>`           
          
     }
     // console.log(m)

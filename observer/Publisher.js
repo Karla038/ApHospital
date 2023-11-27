@@ -11,9 +11,10 @@ class Publisher {
         this.suscribers.push(suscriberToAdd);
     }
 
-    describe(name){
-        this.suscribers = this.suscribers.filter(subscriber => subscriber.name !== name);
-    }
+    unsubscribe(name) {
+        this.subscribers = this.subscribers.filter(subscriber => subscriber.name !== name);
+      }
+
     notify(message){
         this.suscribers.forEach(suscriber => suscriber.notify(message));
     }
@@ -21,3 +22,4 @@ class Publisher {
 
 
 module.exports = Publisher;
+  

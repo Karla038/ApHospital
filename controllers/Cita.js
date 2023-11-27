@@ -4,7 +4,7 @@ const Paciente = require('../models/Paciente');
 const Cita = require('../models/Cita');
 const User = require('../models/User');
 
-const Publisher = require('../observable/Publisher');
+const Publisher = require('../observer/Publisher');
 const {notificacionDoctorCita} = require('../helpers/cita-agendada');
 
 
@@ -24,7 +24,7 @@ const agendarCita = async(req, res=response) => {
     const doctorId = await User.findById(doctor);
     const pacienteId = await Paciente.findById(paciente);
 
-    const fechaFormateada  = `${year} ${month} ${day} ${startHour}`
+    const fechaFormateada  = `${year} ${month} ${day} ${startHour}`;
 
     const datosEmail = {
         nombreDoctor: doctorId.name,
