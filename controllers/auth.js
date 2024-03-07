@@ -11,8 +11,10 @@ const { getMenuFrontEnd } = require('../helpers/menu-frontend');
 // se crea un objeto con los tipos de usuario
 // con su valor 
 const TIPOS_USUARIO = {
+    ADMIN: 'ADMIN',
     DOCTOR:'DOCTOR',
-    ENFERMERA:'ENFERMERA'
+    ENFERMERA:'ENFERMERA',
+    PACIENTE: 'PACIENTE'
 }
 
 
@@ -34,7 +36,7 @@ const crearUsuario = async(req, res = response) => {
             });
         }
 
-        // Validanfo
+        // Validando
         // se verifica si el usuario es doctor y validar que el id
         // exista
         if(role === TIPOS_USUARIO.DOCTOR){
@@ -132,7 +134,7 @@ const obtenerUsuarioId = async (req,res =response) =>{
     if(id === null){
         return res.status(400).json({
             ok:false,
-            msg:'Ubo un error inesperado',
+            msg:'Hubo un error inesperado',
             data:null
         });
     }

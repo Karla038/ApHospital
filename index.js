@@ -34,11 +34,10 @@ app.use('/api/diagnostico',require('./routes/diagnostico-routes'));
 app.use('/api/medicina', require('./routes/medicina'));
 
 //Escuchar peticiones
-/*
 app.listen( process.env.PORT, () => {
     console.log(`Servidor corriendo en puerto ${ process.env.PORT }`)
-})*/
-
-app.listen(4001, () => {
-    console.log('Server Port 4001');
 })
+
+// app.listen(4001, () => {
+//     console.log('Server Port 4001');
+// })
