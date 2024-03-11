@@ -13,6 +13,13 @@ const getMenuFrontEnd = (role) =>{
         link : '/dashboards/cita'
       },
       {
+        id   : 'Cita.MapaSitio',
+        title: 'Mapa del Sitio',
+        type : 'basic',
+        icon:'heroicons_outline:map',
+        link : '/dashboards/mapa-sitio'
+      },
+      {
         id   : 'cita',
         title: 'Historial Pacientes',
         type : 'basic',
@@ -39,7 +46,14 @@ const getMenuFrontEnd = (role) =>{
           type : 'basic',
           icon:'heroicons_outline:clipboard-document-list',
           link : '/dashboards/cita_agendada'
-        } 
+        },
+        {
+          id   : 'Cita.MapaSitio',
+          title: 'Mapa del Sitio',
+          type : 'basic',
+          icon:'heroicons_outline:map',
+          link : '/dashboards/mapa-sitio'
+        }
 
         // {
         //     titulo:'Principal',    
@@ -57,6 +71,7 @@ const getMenuFrontEnd = (role) =>{
       if(role === TIPOS_USUARIO.ENFERMERA){
         return menuEnfermera;
       }
+
       if(role === TIPOS_USUARIO.DOCTOR){
         console.log('Doc');
         return menuDoctor;
