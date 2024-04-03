@@ -8,6 +8,7 @@ const Publisher = require('../observer/Publisher');
 const {notificacionDoctorCita} = require('../helpers/cita-agendada');
 
 
+
 const agendarCita = async(req, res=response) => {
 
     //Esta línea crea una nueva instancia del objeto Publisher. 
@@ -120,6 +121,7 @@ const obtenerCitasPorDoctor = async(req,res = response) =>{
 
     const idDoctor = req.params.idMedico;
 
+    console.log(idDoctor)
     try {  
 
         if(!idDoctor){
@@ -135,6 +137,9 @@ const obtenerCitasPorDoctor = async(req,res = response) =>{
         const month = fecha.getMonth();
         const day = fecha.getDate();
 
+
+        console.log(day)
+        
         const citas = await Cita.find({ 
             $and:[
                 {year:year},

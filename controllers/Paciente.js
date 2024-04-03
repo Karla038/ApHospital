@@ -67,7 +67,7 @@ const busquedaCurp = async (req, res) => {
 
 }
 
-const buscarPacienteId =async(req,res = response) =>{
+const buscarPacienteId = async(req,res = response) =>{
     const id = req.params.id;
     
     // Obtener paciente id

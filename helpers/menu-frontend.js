@@ -1,6 +1,7 @@
 const TIPOS_USUARIO = {
     DOCTOR:'DOCTOR',
-    ENFERMERA:'ENFERMERA'
+    ENFERMERA:'ENFERMERA',
+    PACIENTE:'PACIENTE'
 }
 
 const getMenuFrontEnd = (role) =>{
@@ -19,13 +20,7 @@ const getMenuFrontEnd = (role) =>{
         icon:'heroicons_outline:map',
         link : '/dashboards/mapa-sitio'
       },
-      {
-        id   : 'cita',
-        title: 'Historial Pacientes',
-        type : 'basic',
-        icon:'heroicons_outline:clipboard-document-list',
-        link : '/dashboards/historial_medico'
-      }           
+               
       
         // {
         //   titulo:'Mantenimientos',
@@ -66,7 +61,26 @@ const getMenuFrontEnd = (role) =>{
         //   //     // {titulo:'Mapa del Sitio',url: '/dashboard/mapa-sitio'},
         //   //   ]
         //   }
-      ]
+      ];
+
+      const menuPaciente = [
+        {
+          id   : 'paciente',
+          title: 'Historial Pacientes',
+          type : 'basic',
+          icon:'heroicons_outline:clipboard-document-list',
+          link : '/dashboards/paciente'
+        },
+        {
+          id   : 'Cita.MapaSitio',
+          title: 'Mapa del Sitio',
+          type : 'basic',
+          icon:'heroicons_outline:map',
+          link : '/dashboards/mapa-sitio'
+        }
+
+      ];
+
 
       if(role === TIPOS_USUARIO.ENFERMERA){
         return menuEnfermera;
@@ -75,6 +89,10 @@ const getMenuFrontEnd = (role) =>{
       if(role === TIPOS_USUARIO.DOCTOR){
         console.log('Doc');
         return menuDoctor;
+      }
+
+      if(role === TIPOS_USUARIO.PACIENTE){
+        return menuPaciente;
       }
 }
 
