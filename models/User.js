@@ -24,6 +24,10 @@ const UserSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Especialidad',
         require: false
+    },
+    google:{
+        type: Boolean,
+        default: false
     }
     
 })
