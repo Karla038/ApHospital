@@ -28,12 +28,12 @@ app.use(express.json( ));  //Midelware
 //Rutas
 // Midelware
 // Ruta de autenticación del auth
+app.use('/api/auth', require('./routes/auth'));
 app.use('/api/Paciente', require('./routes/Paciente'));
 app.use('/api/Cita', require('./routes/Cita'));
 app.use('/api/especialidad',require('./routes/especialidad-routes'));
 app.use('/api/diagnostico',require('./routes/diagnostico-routes'));
 app.use('/api/medicina', require('./routes/medicina'));
-app.use('/api/todo', require('./routes/busquedasRoute'))
 
 
 // console.log('Puerto configurado para:', process.env.PORT);

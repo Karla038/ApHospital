@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const { generarJWT } = require('../helpers/jwt');
 const Especialidad = require('../models/Especialidad');
-const Paciente = require('../models/Paciente');
 const { getMenuFrontEnd } = require('../helpers/menu-frontend');
 
 
@@ -50,19 +49,7 @@ const crearUsuario = async(req, res = response) => {
                     msg:'La especialidad no existe'
                 })
             }   
-        }
-        
-        if(role === TIPOS_USUARIO.PACIENTE){
-            const pacienteId = await paciente.findById(Paciente);
-
-            if(!pacienteId){
-                return res.status(404).json({
-                    ok:false,
-                    msg: "El paciente no existe"
-                })
-            }
-
-        }
+        }     
    
 
         usuario = new User(req.body);
@@ -204,7 +191,6 @@ const loginUsuario = async(req, res = response) => {
 
         // Generar JWT
         const token = await generarJWT( usuario.id, usuario.name);
-        console.log(token)
 
 
         return res.status(201).json({
