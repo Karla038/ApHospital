@@ -82,6 +82,87 @@ const crearUsuario = async(req, res = response) => {
     
 }
 
+const actualizarUsuario = async (req, res = response) => {
+
+    const uid = req.params.id;    
+
+    try {
+
+        const usuarioDB = await User.findById( uid );
+
+        if(!usuarioDB){
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario con ese id'
+            })
+        }
+
+        //Actualizaciones 
+
+        const {password, google, email, ...campos} = req.body;
+
+        if( usuarioDB.email !== email ){
+            const existeEmail = await User.findOne({ email });
+
+            if( existeEmail ){
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Ya existe un usuario con este email'
+                })
+            }
+        }
+
+        campos.email = email;
+
+
+        const usuarioActualizado = await User.findByIdAndUpdate( uid, campos, { new: true });
+
+
+        res.json({
+            ok: true,
+            usuario: usuarioActualizado
+        })
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error inesperado'
+        })
+    }
+}
+
+const borrarUsuario = async (req, res = response) => {
+
+    const uid = req.params.id;
+
+    try {
+
+        const usuarioDB = await User.findById( uid );
+
+        if(!usuarioDB){
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario con ese id'
+            })
+        }
+
+        await User.findByIdAndDelete( uid )
+
+        res.status(400).json({
+            ok:true,
+            msg: 'Usuario elimindado correctamente'
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok:false,
+            msg:'Hable con el administrador'
+        });
+    }
+}
+
 const loginUsuario = async(req, res = response) => {
 
     const { email, password} = req.body;
@@ -126,6 +207,14 @@ const loginUsuario = async(req, res = response) => {
         })
     }
 
+}
+
+const googleSignIn = async(req, res = response) => {
+
+    return res.json({
+        ok: true,
+        msg: req.body.token
+    })
 }
 
 const obtenerUsuarioId = async (req,res =response) =>{
@@ -217,6 +306,9 @@ module.exports = {
     obtenerUsuarioId,
     busquedaDoctor,
     crearUsuario,
+    actualizarUsuario,
+    borrarUsuario,
     loginUsuario, 
-    revalidarToken
+    revalidarToken,
+    googleSignIn
 }

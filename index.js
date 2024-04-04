@@ -32,6 +32,7 @@ app.use('/api/Cita', require('./routes/Cita'));
 app.use('/api/especialidad',require('./routes/especialidad-routes'));
 app.use('/api/diagnostico',require('./routes/diagnostico-routes'));
 app.use('/api/medicina', require('./routes/medicina'));
+app.use('/api/todo', require('./routes/busquedas-router'));
 
 //Escuchar peticiones
 app.listen( process.env.PORT, () => {
