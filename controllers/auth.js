@@ -209,6 +209,14 @@ const loginUsuario = async(req, res = response) => {
 
 }
 
+const googleSignIn = async(req, res = response) => {
+
+    return res.json({
+        ok: true,
+        msg: req.body.token
+    })
+}
+
 const obtenerUsuarioId = async (req,res =response) =>{
     const id = req.params.id;
 
