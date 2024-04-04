@@ -3,6 +3,7 @@ const {response} = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const { generarJWT } = require('../helpers/jwt');
+const { googleVerify } = require('../helpers/google-verify');
 const Especialidad = require('../models/Especialidad');
 const { getMenuFrontEnd } = require('../helpers/menu-frontend');
 
@@ -211,10 +212,39 @@ const loginUsuario = async(req, res = response) => {
 
 const googleSignIn = async(req, res = response) => {
 
-    return res.json({
-        ok: true,
-        msg: req.body.token
-    })
+    try {
+
+        const { email, name, picture } = await googleVerify(req.body.token);
+
+        const usuarioDB = await User.findOne({ email });
+        let usuario;
+
+        if ( !usuarioDB ){
+            usuario = new  User({
+                nombre: name, 
+                email: email, 
+                password: ''
+            })
+        }
+
+        res.json({
+            ok:true,
+            email, name, picture
+        })
+
+        
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            ok: false,
+            msg: 'ELtoken de google no es correcto'
+        })
+    }
+
+
+    
 }
 
 const obtenerUsuarioId = async (req,res =response) =>{
