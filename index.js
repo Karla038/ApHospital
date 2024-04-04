@@ -6,6 +6,8 @@ const { dbConnection } = require('./database/config');
 
 require('dotenv').config();
 
+// console.log(process.env)
+
 //Crear el servidor de express
 const app = express();
 
@@ -33,6 +35,9 @@ app.use('/api/especialidad',require('./routes/especialidad-routes'));
 app.use('/api/diagnostico',require('./routes/diagnostico-routes'));
 app.use('/api/medicina', require('./routes/medicina'));
 app.use('/api/todo', require('./routes/busquedas-router'));
+
+
+// console.log('Puerto configurado para:', process.env.PORT);
 
 //Escuchar peticiones
 app.listen( process.env.PORT, () => {

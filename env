@@ -1,7 +1,0 @@
-PORT = 4000
-
-# Variable de la conexión a la base de datos
-
-DB_Connection = mongodb+srv://aphospital:KrFaQIvi9grg19KY@cluster0.rfvwvoj.mongodb.net/aphospital
-
-SecretToken = kjIWJ9384040608KSJksjie
