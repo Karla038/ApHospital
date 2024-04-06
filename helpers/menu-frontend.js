@@ -1,9 +1,18 @@
 const TIPOS_USUARIO = {
-    DOCTOR:'DOCTOR',
-    ENFERMERA:'ENFERMERA'
+  ADMIN: 'ADMIN',
+  DOCTOR:'DOCTOR',
+  ENFERMERA:'ENFERMERA',
+  PACIENTE: 'PACIENTE'
 }
 
 const getMenuFrontEnd = (role) =>{
+
+    const menuAdmin = [
+      {
+        
+      }
+    ];
+
     const menuEnfermera = [
       {
         id   : 'cita',
@@ -68,6 +77,8 @@ const getMenuFrontEnd = (role) =>{
         //   }
       ]
 
+      
+
       if(role === TIPOS_USUARIO.ENFERMERA){
         return menuEnfermera;
       }
@@ -76,6 +87,8 @@ const getMenuFrontEnd = (role) =>{
         console.log('Doc');
         return menuDoctor;
       }
+
+
 }
 
 module.exports = {

@@ -223,13 +223,25 @@ const googleSignIn = async(req, res = response) => {
             usuario = new  User({
                 nombre: name, 
                 email: email, 
-                password: ''
+                password: '@@@',
+                img: picture,
+                google: true
             })
+        }else {
+            usuario = usuarioDB;
+            usuario.google = true 
         }
+
+        //Guardar usuario 
+        await usuario.save();
+
+        // Generar JWT
+        const token = await generarJWT( usuario.id );
 
         res.json({
             ok:true,
-            email, name, picture
+            email, name, picture,
+            token
         })
 
         
