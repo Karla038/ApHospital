@@ -25,6 +25,30 @@ const UserSchema = Schema({
         ref: 'Especialidad',
         require: false
     },
+    suscripcion:{
+        name: {
+            type: String,
+            required: true
+        },
+        description:{
+            type:String,
+            required:true
+        },
+        sizeUsers:{
+            type: Number,
+            required:true
+        },
+        price: {
+            type: String,
+            required :true
+        },
+        dateSuscription:{
+            type: Date,
+            required : true,
+            default: Date.now()
+
+        }
+    },
     google:{
         type: Boolean,
         default: false

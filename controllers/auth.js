@@ -6,6 +6,7 @@ const { generarJWT } = require('../helpers/jwt');
 const { googleVerify } = require('../helpers/google-verify');
 const Especialidad = require('../models/Especialidad');
 const { getMenuFrontEnd } = require('../helpers/menu-frontend');
+const Suscripcion = require('../models/Suscripcion');
 
 
 // Evitar los magic string,
@@ -23,8 +24,9 @@ const TIPOS_USUARIO = {
 const crearUsuario = async(req, res = response) => {
 
 
-    const { email, password,especialidad,role} = req.body;
+    const { email, password,especialidad,role, idSuscripcion} = req.body;
 
+    console.log(idSuscripcion)
     try {
 
         let usuario = await User.findOne({email});
@@ -50,19 +52,29 @@ const crearUsuario = async(req, res = response) => {
                     msg:'La especialidad no existe'
                 })
             }   
-        }     
-   
-
+        }
         usuario = new User(req.body);
+        
+        let suscripcion = null;
+        if(role === TIPOS_USUARIO.ADMIN){
+            suscripcion = await Suscripcion.findById(idSuscripcion);
+            if(!suscripcion){
+                return res.status(404).json({
+                    ok:false,
+                    msg:'La suscripción no existe'
+                })
+            }
 
+        }
+
+        usuario.suscripcion = suscripcion;
+        usuario.suscripcion.dateSuscription = new Date();
+        console.log(usuario);
         // Encriptar contraseña
         const salt = bcrypt.genSaltSync();
         usuario.password = await bcrypt.hashSync( password, salt);
-        console.log('Contrui3');
 
         await usuario.save();
-
-        console.log('Contrui4');
 
 
         // Generar JWT
