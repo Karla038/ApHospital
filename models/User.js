@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose');
+const {Schema, model, default: mongoose} = require('mongoose');
 
 
 const UserSchema = Schema({
@@ -28,27 +28,26 @@ const UserSchema = Schema({
     suscripcion:{
         name: {
             type: String,
-            required: true
         },
         description:{
             type:String,
-            required:true
         },
         sizeUsers:{
             type: Number,
-            required:true
         },
         price: {
             type: String,
-            required :true
         },
         dateSuscription:{
             type: Date,
-            required : true,
-            default: Date.now()
-
         }
     },
+    usuariosSuscripcion:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
     google:{
         type: Boolean,
         default: false

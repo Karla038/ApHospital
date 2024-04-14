@@ -28,4 +28,4 @@ const EspecialidadSchema = Schema({
 
 })
 
-module.exports = model('Especialidad',EspecialidadSchema);
+module.exports = model('Especialidade',EspecialidadSchema);
