@@ -64,11 +64,12 @@ const crearUsuario = async(req, res = response) => {
                     msg:'La suscripción no existe'
                 })
             }
+            usuario.suscripcion = suscripcion;
+            usuario.suscripcion.dateSuscription = new Date();
 
         }
 
-        usuario.suscripcion = suscripcion;
-        usuario.suscripcion.dateSuscription = new Date();
+      
         console.log(usuario);
         // Encriptar contraseña
         const salt = bcrypt.genSaltSync();
