@@ -11,7 +11,7 @@ const RegistroMedicoSchema = mongoose.Schema({
     },
     especialidad: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Especialidades',
+        ref:'Especialidad',
         require: true
     }, 
     diagnostico: {

@@ -29,11 +29,13 @@ app.use(express.json( ));  //Midelware
 // Midelware
 // Ruta de autenticación del auth
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/administrador', require('./routes/administrador-router'));
 app.use('/api/Paciente', require('./routes/Paciente'));
 app.use('/api/Cita', require('./routes/Cita'));
 app.use('/api/especialidad',require('./routes/especialidad-routes'));
 app.use('/api/diagnostico',require('./routes/diagnostico-routes'));
 app.use('/api/medicina', require('./routes/medicina'));
+app.use('/api/suscripciones', require('./routes/suscripciones-routes'));
 app.use('/api/todo', require('./routes/busquedas-router'));
 
 
