@@ -28,6 +28,9 @@ const UserSchema = Schema({
     google:{
         type: Boolean,
         default: false
+    },
+    tokenDoble:{
+        type:String
     }
     
 })

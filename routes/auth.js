@@ -14,7 +14,11 @@ const { obtenerUsuarioId,
         revalidarToken, 
         actualizarUsuario, 
         borrarUsuario, 
-        googleSignIn 
+        googleSignIn,
+        confirmar,
+        olvidePassword,
+        nuevoPassword,
+        comprobarTokenValidacion 
     } = require('../controllers/auth');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
@@ -71,5 +75,9 @@ router.delete( '/:id', borrarUsuario)
 
 // ruta del token, genera jsonWebToken
 router.get('/renew', validarJWT, revalidarToken);
+
+router.get('/confirmar/:tokenDoble',confirmar)
+router.post('/olvide-password',olvidePassword);
+router.route('/nuevo-password/:tokenDoble').get(comprobarTokenValidacion).post(nuevoPassword);
 
 module.exports = router;

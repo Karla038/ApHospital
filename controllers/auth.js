@@ -6,6 +6,8 @@ const { generarJWT } = require('../helpers/jwt');
 const { googleVerify } = require('../helpers/google-verify');
 const Especialidad = require('../models/Especialidad');
 const { getMenuFrontEnd } = require('../helpers/menu-frontend');
+const  { generarToken }  = require('../helpers/generarId');
+const { emailOlvidePassword } = require('../helpers/cuerpoEmail');
 
 
 // Evitar los magic string,
@@ -343,6 +345,129 @@ const revalidarToken = async (req, res = response) => {
     })
 }
 
+const confirmar = async (req, res = response) => {
+    const { tokenDoble } = req.params;
+    console.log("Primer log"+tokenDoble);
+
+    const usuarioConfirmado = await User.findOne({ tokenDoble });
+
+    console.log("Primer log"+usuarioConfirmado);
+
+    if(!usuarioConfirmado || usuarioConfirmado === null ) {
+        return res.status(404).json({
+            msg: "El token es invalido",
+            ok :false
+        })
+    }
+
+    try {
+        usuarioConfirmado.confirmado = true;
+        usuarioConfirmado.tokenDoble = '';
+
+        await usuarioConfirmado.save();
+        res.json({
+            ok:true,
+            msg: 'Usuario confirmado correctamente'
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const olvidePassword = async (req, res=response) => {
+    const {email} = req.body;
+    console.log(email);
+    const usuario = await User.findOne({email});
+    console.log(usuario);
+
+    if(!usuario || usuario === null){
+        res.json({
+            msg:"El usuario no existe",
+            ok:false
+        })
+    }
+
+    try {
+
+        // Generar el token
+
+        usuario.tokenDoble = ''
+
+        usuario.tokenDoble = generarToken.generarIdMetodo();
+        await usuario.save();
+
+        emailOlvidePassword({
+            email: usuario.email,
+            name: usuario.name,
+            token: usuario.tokenDoble
+        })
+
+        res.json({
+            msg:'Hemos enviado un email con las instrucciones',
+
+        })
+        
+    } catch (error) {
+        console.log(error)    
+    }
+}
+
+const nuevoPassword = async (req, res=response) =>{
+    const {tokenDoble} = req.params;
+    const {password} = req.body;
+
+    console.log( "Password" + password );
+    console.log( "TokenDoble" + tokenDoble );
+
+    const usuario = await User.findOne({tokenDoble});
+
+    console.log(usuario)
+
+    if(!usuario){
+        res.json({
+            ok:false,
+            msg:"Token invalido"
+        })
+    }
+
+    try {
+        
+        const salt = bcrypt.genSaltSync();
+        usuario.password = await bcrypt.hashSync(password, salt);
+        usuario.tokenDoble = '';
+
+        await usuario.save();
+
+        res.json({
+            msg: 'La contraseña se actualizo correctamente',
+            ok:false
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const comprobarTokenValidacion = async(req, res=response) => {
+    const {tokenDoble} = rew.params;
+    console.log(tokenDoble);
+
+    const tokenValidar = await User.findOne({tokenDoble});
+
+    if(!tokenValidar){
+        re.json({
+            msg:'Token no valido',
+            ok:false
+        })
+    }
+    if(tokenValidar){
+        res.json({
+            msg:'Token valido el usuario existe',
+            ok:true
+        })
+    }
+}
+
+
 
 
 module.exports = {
@@ -353,5 +478,9 @@ module.exports = {
     borrarUsuario,
     loginUsuario, 
     revalidarToken,
-    googleSignIn
+    googleSignIn,
+    confirmar,
+    olvidePassword,
+    nuevoPassword,
+    comprobarTokenValidacion
 }
