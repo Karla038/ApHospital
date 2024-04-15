@@ -24,7 +24,7 @@ const TIPOS_USUARIO = {
 const crearUsuario = async(req, res = response) => {
 
 
-    const { email, password,especialidad,role, idSuscripcion} = req.body;
+    const { email, password,idEspecialidad,role, idSuscripcion} = req.body;
 
     console.log(idSuscripcion)
     try {
@@ -44,9 +44,9 @@ const crearUsuario = async(req, res = response) => {
         // exista
         if(role === TIPOS_USUARIO.DOCTOR){
             // Verificando el id realmente exista
-            const especialidadId = await Especialidad.findById(especialidad);
+            const especialidad = await Especialidad.findById(idEspecialidad);
 
-            if(!especialidadId){
+            if(!especialidad){
                 return res.status(404).json({
                    ok:false,
                     msg:'La especialidad no existe'

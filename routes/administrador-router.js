@@ -35,7 +35,7 @@ router.put('/actualizarUsuario',
     actualizarUsuario
 );
 router.get('/obtenerTodosUsuarios/:idUsuarioAdmin',obtenerTodosLosUsuarios)
-router.delete('/eliminarUsuario',eliminarUsuario)
+router.post('/eliminarUsuario',eliminarUsuario)
 
 
 module.exports = router;

@@ -77,8 +77,7 @@ const agregarUsuarioNuevoAdminEmail = async (req, res) => {
 const agregarUsuarioNuevoAdmin = async (req, res = response) => {
 
 
-    const { email, password, especialidad, role, idUsuarioAdmin } = req.body;
-    console.log("agregarUsuarioNuevoAdmin")
+    const { email, password, idEspecialidad, role, idUsuarioAdmin } = req.body;
 
     try {
 
@@ -100,7 +99,6 @@ const agregarUsuarioNuevoAdmin = async (req, res = response) => {
 
 
         let usuario = await User.findOne({ email });
-        console.log(usuario);
 
         if (usuario) {
             return res.status(400).json({
@@ -114,14 +112,14 @@ const agregarUsuarioNuevoAdmin = async (req, res = response) => {
         // exista
 
         console.log("DOCTOR")
-
+        let especialidad = null;
         if (role === TIPOS_USUARIO.DOCTOR) {
             // Verificando el id realmente exista
             console.log("DOCTOR 2")
-
-            const especialidadId = await Especialidad.findById(especialidad);
+            especialidad = await Especialidad.findById(idEspecialidad);
+            console.log(idEspecialidad)
             console.log("DOCTOR 3")
-            if (!especialidadId) {
+            if (!especialidad) {
                 return res.status(404).json({
                     ok: false,
                     msg: 'La especialidad no existe'
@@ -129,7 +127,7 @@ const agregarUsuarioNuevoAdmin = async (req, res = response) => {
             }
         }
         usuario = new User(req.body);
-        console.log(usuario)
+        usuario.especialidad = especialidad;
         // Encriptar contraseña
         const salt = bcrypt.genSaltSync();
         usuario.password = await bcrypt.hashSync(password, salt);
@@ -194,7 +192,7 @@ const obtenerTodosLosUsuarios = async (req, res) => {
 }
 
 const actualizarUsuario = async(req, res) =>{
-    const {idUsuarioAdmin,idUsuario,role,idEspecialidad} = req.body;
+    const {idUsuario,role,idEspecialidad} = req.body;
 
     try {
 
@@ -223,8 +221,10 @@ const actualizarUsuario = async(req, res) =>{
         console.log("DOCTOR 2")
 
         const especialidadId = await Especialidad.findById(idEspecialidad);
-        usuario.especialidadId = especialidadId;
+        usuario.especialidad = especialidadId;
         console.log("DOCTOR 3")
+        console.log(usuario)
+
         if (!especialidadId) {
             return res.status(404).json({
                 ok: false,
@@ -232,7 +232,6 @@ const actualizarUsuario = async(req, res) =>{
             })
         }
     }
-    console.log(usuario)
 
 
     await User.findOneAndUpdate({ _id: idUsuario }, usuario);

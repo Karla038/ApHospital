@@ -9,8 +9,12 @@ const getMenuFrontEnd = (role) =>{
 
     const menuAdmin = [
       {
-        
-      }
+        id   : 'admin',
+        title: 'Administracion de usuarios',
+        type : 'basic',
+        icon : 'heroicons_outline:user-circle',
+        link : '/dashboards/administrador-usuarios'
+      },
     ];
 
     const menuEnfermera = [
@@ -77,15 +81,17 @@ const getMenuFrontEnd = (role) =>{
         //   }
       ]
 
-      
-
-      if(role === TIPOS_USUARIO.ENFERMERA){
-        return menuEnfermera;
+      const menuPorRol = {
+        [TIPOS_USUARIO.ADMIN]: menuAdmin,
+        [TIPOS_USUARIO.DOCTOR]: menuDoctor,
+        [TIPOS_USUARIO.ENFERMERA]: menuEnfermera
       }
 
-      if(role === TIPOS_USUARIO.DOCTOR){
-        console.log('Doc');
-        return menuDoctor;
+      const menu = menuPorRol[role];
+      if(menu){
+        return menu;
+      }else{
+        console.log("no existe este rol")
       }
 
 
