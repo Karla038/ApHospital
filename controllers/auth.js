@@ -436,7 +436,7 @@ const nuevoPassword = async (req, res=response) =>{
     console.log(usuario)
 
     if(!usuario){
-        res.json({
+        res.status(400).json({
             ok:false,
             msg:"Token invalido"
         })
@@ -460,13 +460,13 @@ const nuevoPassword = async (req, res=response) =>{
 }
 
 const comprobarTokenValidacion = async(req, res=response) => {
-    const {tokenDoble} = rew.params;
+    const {tokenDoble} = req.params;
     console.log(tokenDoble);
 
     const tokenValidar = await User.findOne({tokenDoble});
 
     if(!tokenValidar){
-        re.json({
+        res.status(400).json({
             msg:'Token no valido',
             ok:false
         })
