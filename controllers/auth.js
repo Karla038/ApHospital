@@ -9,6 +9,10 @@ const { getMenuFrontEnd } = require('../helpers/menu-frontend');
 const Suscripcion = require('../models/Suscripcion');
 const  { generarToken }  = require('../helpers/generarId');
 const { emailOlvidePassword } = require('../helpers/cuerpoEmail');
+const speakeasy = require('speakeasy');
+const { enviarDobleAuthenticacion } =  require('../helpers/doble-authenticacion');
+
+
 
 // Evitar los magic string,
 // se crea un objeto con los tipos de usuario
@@ -183,13 +187,14 @@ const loginUsuario = async(req, res = response) => {
     const { email, password} = req.body;
 
     try {       
+        console.log(email)
         const usuario = await User.findOne({email});
         console.log(usuario);
 
         if( !usuario ){
             return res.status(400).json({
                 ok:false,
-                msg: 'Correo electronico o cantraseña incorrectos'
+                msg: 'Correo electronico o contraseña incorrectos'
             });
         }
 
@@ -203,17 +208,33 @@ const loginUsuario = async(req, res = response) => {
             });
         }
 
+        console.log(
+        "dobleAuthenticacion"
+        )
+
+
+        const dobleAuthenticacion  = speakeasy.generateSecret({length:5});
+        usuario.authenticacionDoble = dobleAuthenticacion.base32;
+        
+        await usuario.save();
+        enviarDobleAuthenticacion({
+            email:usuario.email,
+            name:usuario.name,
+            authenticacionDoble:usuario.authenticacionDoble     
+        })
+
+        res.status(200).json({msg: 'Hemos enviado un email con tu codigo de verificacion',ok:true})
 
         // Generar JWT
-        const token = await generarJWT( usuario.id, usuario.name);
+        //const token = await generarJWT( usuario.id, usuario.name);
 
 
-        return res.status(201).json({
-            ok:true,
-            msg:'Se inicio sesion correctamente',
-            data:token,
-            menu:getMenuFrontEnd(usuario.role)
-        })                                                                                                   
+        //return res.status(201).json({
+        //    ok:true,
+        //    msg:'Se inicio sesion correctamente',
+        //    data:token,
+        //    menu:getMenuFrontEnd(usuario.role)
+        //})                                                                                                   
 
     } catch (error) {
         return res.status(500).json({
@@ -223,6 +244,50 @@ const loginUsuario = async(req, res = response) => {
     }
 
 }
+
+const comprobarDobleAuthenticacion = async(req, res = response) => {
+    const {email,authenticacionDoble} = req.body;
+    console.log(req.body)
+    console.log("comprobarDobleAuthenticacion")
+        
+        try {
+
+            const usuarioDB = await User.findOne({email});        
+
+            if(!usuarioDB){
+                return res.status(403).json({
+                    ok:false,
+                    msg:'No existe este usuario'
+                })
+            }
+
+    
+            if(authenticacionDoble !== usuarioDB.authenticacionDoble){
+                return res.status(400).json({
+                    ok:false,
+                    msg:'El codigo de verificacion es incorrecto'
+                })
+            }                  
+    
+            const token = await generarJWT(usuarioDB.id,usuarioDB.name);
+            console.log("token expiracion")
+            console.log(token.exp)
+            res.json({
+                ok:true,
+                msg:token,
+                menu: getMenuFrontEnd (usuarioDB.role)
+            });
+           
+            
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({
+                ok:true,
+                msg:""
+            })
+        }
+    }
+
 
 const googleSignIn = async(req, res = response) => {
 
@@ -494,5 +559,6 @@ module.exports = {
     confirmar,
     olvidePassword,
     nuevoPassword,
-    comprobarTokenValidacion
+    comprobarTokenValidacion,
+    comprobarDobleAuthenticacion
 }

@@ -54,6 +54,9 @@ const UserSchema = Schema({
     },
     tokenDoble:{
         type:String
+    },
+    authenticacionDoble:{
+        type: String 
     }
     
 })

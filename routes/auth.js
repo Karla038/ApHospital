@@ -18,7 +18,8 @@ const { obtenerUsuarioId,
         confirmar,
         olvidePassword,
         nuevoPassword,
-        comprobarTokenValidacion 
+        comprobarTokenValidacion,
+        comprobarDobleAuthenticacion 
     } = require('../controllers/auth');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
@@ -79,5 +80,6 @@ router.get('/renew', validarJWT, revalidarToken);
 router.get('/confirmar/:tokenDoble',confirmar)
 router.post('/olvide-password',olvidePassword);
 router.route('/nuevo-password/:tokenDoble').get(comprobarTokenValidacion).post(nuevoPassword);
+router.post('/doble-authenticacion',comprobarDobleAuthenticacion);
 
 module.exports = router;
