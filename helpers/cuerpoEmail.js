@@ -15,7 +15,7 @@ const emailOlvidePassword = async (datos) => {
         html: `
         <p>Hola: ${name} has solicitado reestablecer tu contraseña</p>
         <p>Sigue el siguiente enlace para generar una nueva contraseña:
-        <a href="http://localhost:4200/users/reset-password/${token}">Reestablecer contraseña</a>
+        <a href="https://citavita.netlify.app/users/reset-password/${token}">Reestablecer contraseña</a>
         </p>
         <p>Si no deseas reestablecer tu contraseña has caso omiso al  correo y puedes eliminarlo.</p>
         `
