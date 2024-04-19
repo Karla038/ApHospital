@@ -1,7 +1,7 @@
 // Importar la libreria de express a este archivo para obtener la ayuda 
 const {response} = require('express');
 const bcrypt = require('bcrypt');
-const User = require('../models/User');
+const User = require('../models/User.js');
 const { generarJWT } = require('../helpers/jwt');
 const { googleVerify } = require('../helpers/google-verify');
 const Especialidad = require('../models/Especialidad');
@@ -246,13 +246,16 @@ const loginUsuario = async(req, res = response) => {
 }
 
 const comprobarDobleAuthenticacion = async(req, res = response) => {
-    const {email,authenticacionDoble} = req.body;
+    const { email, authenticacionDoble } = req.body;
+   
     console.log(req.body)
+    console.log(email)
     console.log("comprobarDobleAuthenticacion")
         
         try {
 
             const usuarioDB = await User.findOne({email});        
+            console.log('Aparece eso o no ' + usuarioDB);
 
             if(!usuarioDB){
                 return res.status(403).json({
