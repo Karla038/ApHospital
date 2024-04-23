@@ -187,9 +187,7 @@ const loginUsuario = async(req, res = response) => {
     const { email, password} = req.body;
 
     try {       
-        console.log(email)
         const usuario = await User.findOne({email});
-        console.log(usuario);
 
         if( !usuario ){
             return res.status(400).json({
@@ -208,11 +206,6 @@ const loginUsuario = async(req, res = response) => {
             });
         }
 
-        console.log(
-        "dobleAuthenticacion"
-        )
-
-
         const dobleAuthenticacion  = speakeasy.generateSecret({length:5});
         usuario.authenticacionDoble = dobleAuthenticacion.base32;
         
@@ -223,7 +216,11 @@ const loginUsuario = async(req, res = response) => {
             authenticacionDoble:usuario.authenticacionDoble     
         })
 
+
         res.status(200).json({msg: 'Hemos enviado un email con tu codigo de verificacion',ok:true})
+        console.log("msg")
+
+        console.log(usuario)
 
         // Generar JWT
         //const token = await generarJWT( usuario.id, usuario.name);
