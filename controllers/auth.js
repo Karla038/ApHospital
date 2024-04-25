@@ -219,7 +219,6 @@ const loginUsuario = async(req, res = response) => {
 
 
         res.status(200).json({msg: 'Hemos enviado un email con tu codigo de verificacion',ok:true})
-        console.log("msg")
 
         console.log(usuario)
 
@@ -275,7 +274,7 @@ const comprobarDobleAuthenticacion = async(req, res = response) => {
             console.log(token.exp)
             res.json({
                 ok:true,
-                msg:token,
+                data:token,
                 menu: getMenuFrontEnd (usuarioDB.role)
             });
            
