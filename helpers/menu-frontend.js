@@ -6,6 +6,24 @@ const TIPOS_USUARIO = {
 }
 
 const getMenuFrontEnd = (role) =>{
+    const menuBase = [
+      {
+        id   : 'home',
+        title: 'Inicio',
+        link:'/home-nuevo'
+      },
+      {
+        id   : 'home',
+        title: 'Conoce mas',
+        link:'/conoce-mas'
+      },
+      {
+        id   : 'home',
+        title: 'Mapa sitio',
+        link:'/mapa-sitio2'
+      }
+    ];
+
 
     const menuAdmin = [
       {
@@ -88,6 +106,7 @@ const getMenuFrontEnd = (role) =>{
       }
 
       const menu = menuPorRol[role];
+      menu.push(menuBase)
       if(menu){
         return menu;
       }else{
