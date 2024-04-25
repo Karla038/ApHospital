@@ -395,8 +395,14 @@ const busquedaDoctor = async (req, res = response) => {
     
     try {
         
-        let doctores = await User.find({ role:doctor }).populate('especialidad','name');
+        console.log('doctor')
 
+        console.log(doctor)
+        let doctores = await User.find({ role:doctor }).populate({
+            path: 'especialidad',
+            model: 'Especialidade',
+            select: 'name'
+        });
 
         return res.status(200).json({
             ok:true,

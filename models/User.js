@@ -22,7 +22,7 @@ const UserSchema = Schema({
     },      
     especialidad:{
         type: Schema.Types.ObjectId,
-        ref: 'Especialidad',
+        ref: 'Especialidade',
         require: false
     },
     suscripcion:{
