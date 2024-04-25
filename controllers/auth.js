@@ -29,9 +29,10 @@ const TIPOS_USUARIO = {
 const crearUsuario = async(req, res = response) => {
 
 
-    const { email, password,idEspecialidad,role, idSuscripcion} = req.body;
+    const { email, password,especialidad,role, idSuscripcion} = req.body;
+    const idEspecialidad = especialidad;
 
-    console.log(idSuscripcion)
+    console.log(idEspecialidad)
     try {
 
         let usuario = await User.findOne({email});
@@ -50,7 +51,7 @@ const crearUsuario = async(req, res = response) => {
         if(role === TIPOS_USUARIO.DOCTOR){
             // Verificando el id realmente exista
             const especialidad = await Especialidad.findById(idEspecialidad);
-
+            console.log(especialidad)
             if(!especialidad){
                 return res.status(404).json({
                    ok:false,
