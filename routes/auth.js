@@ -78,7 +78,7 @@ router.delete( '/:id', borrarUsuario)
 // ruta del token, genera jsonWebToken
 router.get('/renew', validarJWT, revalidarToken);
 
-router.get('/fecha', verificarTiempoSesion)
+router.get('/fecha', verificarTiempoSesion);
 
 router.get('/confirmar/:tokenDoble',confirmar)
 router.post('/olvide-password',olvidePassword);
