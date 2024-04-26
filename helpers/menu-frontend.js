@@ -6,7 +6,7 @@ const TIPOS_USUARIO = {
 }
 
 const getMenuFrontEnd = (role) =>{
-    const menuBase = [
+    const menuBaseInicio = [
       {
         id   : 'home',
         title: 'Inicio',
@@ -105,8 +105,9 @@ const getMenuFrontEnd = (role) =>{
         [TIPOS_USUARIO.ENFERMERA]: menuEnfermera
       }
 
-      const menu = menuPorRol[role];
-      menu.push(menuBase)
+      let menu = menuPorRol[role];
+      menu.push(...menuBaseInicio)
+      console.log(menu)
       if(menu){
         return menu;
       }else{
