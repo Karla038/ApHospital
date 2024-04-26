@@ -19,7 +19,8 @@ const { obtenerUsuarioId,
         olvidePassword,
         nuevoPassword,
         comprobarTokenValidacion,
-        comprobarDobleAuthenticacion 
+        comprobarDobleAuthenticacion,
+        verificarTiempoSesion 
     } = require('../controllers/auth');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
@@ -76,6 +77,8 @@ router.delete( '/:id', borrarUsuario)
 
 // ruta del token, genera jsonWebToken
 router.get('/renew', validarJWT, revalidarToken);
+
+router.get('/fecha', verificarTiempoSesion)
 
 router.get('/confirmar/:tokenDoble',confirmar)
 router.post('/olvide-password',olvidePassword);
