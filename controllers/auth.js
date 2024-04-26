@@ -2,7 +2,7 @@
 const {response} = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/User.js');
-const { generarJWT } = require('../helpers/jwt');
+const { generarJWT, verificarToken } = require('../helpers/jwt');
 const { googleVerify } = require('../helpers/google-verify');
 const Especialidad = require('../models/Especialidad');
 const { getMenuFrontEnd } = require('../helpers/menu-frontend');
@@ -550,7 +550,26 @@ const comprobarTokenValidacion = async(req, res=response) => {
     }
 }
 
+const verificarTiempoSesion = async(req, res=response) => {
+    const token = req.get('x-token');
 
+    console.log("Primer log " + token );
+
+    if(!token){
+        res.status(400).json({
+            ok:false,
+            msg:'El token no es valido'
+        })
+    }
+
+    const fechaToken = await verificarToken(token);
+
+    res.json({
+        ok:true,
+        fechaToken
+    })
+
+}
 
 
 module.exports = {
@@ -566,5 +585,6 @@ module.exports = {
     olvidePassword,
     nuevoPassword,
     comprobarTokenValidacion,
-    comprobarDobleAuthenticacion
+    comprobarDobleAuthenticacion,
+    verificarTiempoSesion
 }
