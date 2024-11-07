@@ -49,3 +49,5 @@ app.listen( process.env.PORT, () => {
 // app.listen(4001, () => {
 //     console.log('Server Port 4001');
 // })
+
+module.exports = app; 
