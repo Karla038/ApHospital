@@ -217,8 +217,10 @@ const loginUsuario = async(req, res = response) => {
             authenticacionDoble:usuario.authenticacionDoble     
         })
 
-
-        res.status(200).json({msg: 'Hemos enviado un email con tu codigo de verificacion',ok:true})
+        res.status(200)
+            .json(
+                {msg: 'Hemos enviado un email con tu codigo de verificacion',
+                ok:true})
 
         console.log(usuario)
 

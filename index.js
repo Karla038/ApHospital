@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors')
 const { dbConnection } = require('./database/config');
+const webpush = require('web-push');
+
 
 // console.log( process.env );
 
@@ -16,6 +18,21 @@ dbConnection();
 
 //Cors
 app.use(cors('*'));
+
+
+//token para el push de notificaciones
+const VAPID_KEYS = { 
+    publicKey: "BIlWKRxRCjukcYNwwi1eKPnspm7_A1HFrjI9KkFiIo-7Acj3iJOLqyEXSvhNUTiNT4B5_p9S2zOEL4bCemhHzn4",
+    privateKey: "cgCyq4ANYABfZ9mu9r8IHqu_o7KRnVZwt00R3KDx8cc" 
+}
+
+
+webpush.setVapidDetails(
+    'mailto:example@yourdomain.org',
+    VAPID_KEYS.publicKey,
+    VAPID_KEYS.privateKey
+
+)
 
 
 //Directorio public
@@ -37,6 +54,7 @@ app.use('/api/diagnostico',require('./routes/diagnostico-routes'));
 app.use('/api/medicina', require('./routes/medicina'));
 app.use('/api/suscripciones', require('./routes/suscripciones-routes'));
 app.use('/api/todo', require('./routes/busquedas-router'));
+app.use('/api/token',require('./routes/token-router'))
 
 
 // console.log('Puerto configurado para:', process.env.PORT);
